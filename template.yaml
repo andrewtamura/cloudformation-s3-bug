@@ -1,0 +1,31 @@
+---
+AWSTemplateFormatVersion: 2010-09-09
+Description: Example template that will fail to create s3 bucket
+Resources:
+  UserContentBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccelerateConfiguration:
+        AccelerationStatus: Enabled
+      BucketName: !Sub '${AWS::AccountId}-cloudformation-s3-bucket-failure'
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      CorsConfiguration:
+        CorsRules:
+          - AllowedHeaders:
+              - '*'
+            AllowedMethods:
+              - PUT
+              - POST
+              - DELETE
+            AllowedOrigins:
+              - 'http://localhost'
+            ExposedHeaders:
+              - ETag
+              - x-amz-server-side-encryption
+              - x-amz-request-id
+              - x-amz-id-2
+      VersioningConfiguration:
+        Status: Enabled
